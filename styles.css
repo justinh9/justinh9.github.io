@@ -1,3 +1,11 @@
+@import url(//fonts.googleapis.com/css?family=Baloo+Chettan+2);
+
+@import url(https://fonts.googleapis.com/css?family=Overpass);
+
+#content-wrapper {
+  font-family: 'Baloo Chettan 2', cursive;
+}
+
 .section-blog-header {
   padding: 1em 0 4em 0;
   background: #444; }
