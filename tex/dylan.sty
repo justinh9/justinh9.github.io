@@ -623,23 +623,19 @@ mdframed={
 }
 \fi
 
+\newenvironment{soln}{\begin{proof}[Solution]}{\end{proof}}
+\newenvironment{answer}{\begin{proof}[Answer]}{\end{proof}}
+\declaretheorem[style=shaded,name = \hspace{2mm}\textcolor{red}{\faWarning}\text{ } Bogus Solution, numbered = no]{bogus}
 
 \ifdylanhide
-\excludecomment{soln}
-\excludecomment{answer}
-\excludecomment{proof}
-\excludecomment{bogus}
 \excludecomment{hint}
 \excludecomment{hintone}
 \excludecomment{sol}
 \else
-\newenvironment{soln}{\begin{proof}[Solution]}{\end{proof}}
-\newenvironment{answer}{\begin{proof}[Answer]}{\end{proof}}
-\declaretheorem[style=shaded,name = \hspace{2mm}\textcolor{red}{\faWarning}\text{ } Bogus Solution, numbered = no]{bogus}
 % You put (typically) \begin{hint}All of your \begin{addhint}..\end{addhint} here\end{hint} so it looks like Hint: # # #
-\newenvironment{hint}{\mbox\bgroup\footnotesize\normalfont\textbf{Hints}:}{\hspace{-0.5ex}\egroup}
-\newenvironment{hintone}{\mbox\bgroup\footnotesize\normalfont\textbf{Hint}:}{\hspace{-0.5ex}\egroup}
-\newenvironment{sol}{\mbox\bgroup\footnotesize\normalfont\textbf{Solution}:}{\hspace{-0.5ex}\egroup}
+\newenvironment{hint}{\mbox\bgroup\footnotesize\normalfont\sffamily\textbf{Hints}:}{\hspace{-0.5ex}\egroup}
+\newenvironment{hintone}{\mbox\bgroup\footnotesize\normalfont\sffamily\textbf{Hint}:}{\hspace{-0.5ex}\egroup}
+\newenvironment{sol}{\mbox\bgroup\footnotesize\normalfont\sffamily\textbf{Solution}:}{\hspace{-0.5ex}\egroup}
 \fi
 
 
@@ -701,7 +697,7 @@ mdframed={
 \usepackage[clock]{ifsym}
 
 \usepackage{asymptote}
-\newcommand{\vocab}[1]{\textbf{\color{blue!90}\boldmath #1}}
+\newcommand{\vocab}[1]{\textbf{\sffamily\color{blue!90}\boldmath #1}}
 \usepackage{enumitem}
 
 \newcommand{\myemail}[1]{\faEnvelope \text{ }\href{mailto:#1}{#1}}
@@ -741,7 +737,7 @@ mdframed={
 % Specifies minimum amount of points to complete a unit
 
 \newenvironment{boxpar}[1][]{%
-\begin{mdframed}\begin{minipage}{13.7cm}\paragraph{\sffamily #1}
+\begin{mdframed}\begin{minipage}{15.8cm}\paragraph{\sffamily #1}
 }{\end{minipage}\end{mdframed}}
 
 \usepackage{float}
@@ -779,6 +775,10 @@ mdframed={
 \makeatletter
 \@addtoreset{section}{part}
 
+\usepackage[makeroom]{cancel}
+
+\let\endtitlepage\relax
+
 %%% COPYRIGHT %%%
 \newcommand{\dylancopy}{Copyright \copyright \text{ } 2020 by \myname. All rights reserved. For any inquiries, please contact \href{mailto:\dylanemail}{\dylanemail}.}
 \newcommand{\tutoringcopy}{\textbf{Internal use only.} \dylancopy}
@@ -797,5 +797,3 @@ mdframed={
 \newcommand{\cycsum}{\sum_{\text{cyc}}}
 \newcommand{\symprod}{\prod_{\text{sym}}}
 \newcommand{\cycprod}{\prod_{\text{cyc}}}
-
-\usepackage[makeroom]{cancel}
