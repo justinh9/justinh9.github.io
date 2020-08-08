@@ -1,0 +1,126 @@
+\documentclass[twoside]{article}
+\usepackage[]{dylan} % put copy for copyright, serif for serif font, utopia for utopia font, and hide to get rid of hints and small solutions
+ 
+\renewcommand{\abstractname}{\large\sffamily\bfseries\color{DylanBlue}Summary}
+ 
+\title{Example File with dylan.sty}
+\author{Dylan Yu}
+\date{\today}
+\runningheads{\textbf{Dylan Yu} (\today)}{Example File with dylan.sty}
+ 
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Summarize what you are going to teach here. For example, today's topic is how to use \verb|dylan.sty|. Yay! I am writing more things to fill up the summary so you can see what it looks like.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\section{Test}
+\subsection{Testing}
+\subsubsection{Tested}
+\begin{defn}[Definition]
+The word \vocab{definition} refers to the meaning of something.
+\end{defn}
+\begin{theorem}
+Theorems, lemmas, corollaries, postulates, and propositions are all defined together. 
+\end{theorem}
+\begin{lemma}[Title of Lemma]
+You can title all of these as well.
+\end{lemma}
+\begin{corollary}
+
+\end{corollary}
+\begin{postulate}
+
+\end{postulate}
+\begin{prop}
+
+\end{prop}
+\begin{proof}
+We will use the following lemma:
+\begin{lemma*}
+This lemma is not numbered. Some unnumbered theorem styles are undefined, so create your own if necessary.
+\end{lemma*}
+\end{proof}
+\begin{example}
+
+\end{example}
+\begin{soln}
+
+\end{soln}
+\begin{problem}
+
+\end{problem}
+\begin{walk}
+Explains the problem through steps:
+\begin{enumerate}
+    \item Read the problem.
+    \item Read the problem again.
+    \item Got it?
+\end{enumerate}
+\end{walk}
+
+\begin{moral}
+Use Dylan's .sty!
+\end{moral}
+
+\begin{fact}
+
+\end{fact}
+
+\begin{remark}
+
+\end{remark}
+
+\begin{basecase}
+
+\end{basecase}
+
+\begin{indstep}
+
+\end{indstep}
+
+\begin{case}
+
+\end{case}
+
+\begin{boxpar}[Paragraph Title]
+Paragraphs are cool. This is a paragraph. It is very interesting. It even repeats! Replacing this with words you want will make the paragraph even better. Try it out! Paragraphs are cool. This is a paragraph. It is very interesting. It even repeats! Replacing this with words you want will make the paragraph even better. Try it out! Paragraphs are cool. This is a paragraph. It is very interesting. It even repeats! Replacing this with words you want will make the paragraph even better. Try it out!
+\end{boxpar}
+
+\begin{exercisebox}
+\begin{exercise}
+Consider $\triangle ABC$ with incenter $I.$ Prove that $\angle BIC=90^{\circ}+\frac{1}{2}\angle BAC.$
+\end{exercise}
+\begin{exercise}
+If $1+1=3$, what is $2+2$?
+\begin{hint}
+\begin{addhint}
+{This is a hint.}
+\end{addhint}
+\begin{addhint}
+{You can add multiple hints.}
+\end{addhint}
+\end{hint}
+\begin{sol}
+\begin{addsol}
+{You can also add solutions.}
+\end{addsol}
+\end{sol}
+\end{exercise}
+\begin{exercise}[Not a real problem]
+How many beans are in my pocket?
+\end{exercise}
+\begin{exercise}
+Exercise boxes can even go across pages!\footnote{This is a footnote.}
+\end{exercise}
+\end{exercisebox}
+
+\appendix % this makes the sections A,B,C,etc.
+\input{hint}
+\input{sol}
+
+\end{document}
