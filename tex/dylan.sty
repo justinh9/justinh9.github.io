@@ -1,4 +1,4 @@
-%  dylan.sty   Dylan Yu, Version 07.23.20, special thanks to chadstyle.sty by Chad
+%  dylan.sty   Dylan Yu, Version 08.08.20, special thanks to chadstyle.sty by Chad
 
 \special{papersize=8.5in,11in}
 %\usepackage{palatino,amssymb,amsfonts,amsmath,latexsym,setspace}
@@ -736,9 +736,10 @@ mdframed={
 }
 % Specifies minimum amount of points to complete a unit
 
+% nice paragraph box, hacked a little using vspace to get rid of weird space at top
 \newenvironment{boxpar}[1][]{%
-\begin{mdframed}\begin{minipage}{15.8cm}\paragraph{\sffamily #1}
-}{\end{minipage}\end{mdframed}}
+\begin{mdframed}\vspace*{-0.5cm}\paragraph{\sffamily #1}
+}{\end{mdframed}}
 
 \usepackage{float}
 
