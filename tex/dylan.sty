@@ -1,4 +1,4 @@
-%  dylan.sty   Dylan Yu, Version 08.29.20, special thanks to chadstyle.sty by Chad
+%  dylan.sty   Dylan Yu, Version 08.31.20, special thanks to chadstyle.sty by Chad
 
 \special{papersize=8.5in,11in}
 %\usepackage{palatino,amssymb,amsfonts,amsmath,latexsym,setspace}
@@ -13,6 +13,7 @@
 \newif\ifdylanhide \dylanhidefalse
 \newif\ifdylanwater \dylanwaterfalse
 \newif\ifdylannew \dylannewfalse
+\newif\ifdylanlight \dylanlightfalse
 \newif\ifdylantutoring \dylantutoringfalse
 \DeclareOption{serif}{\dylanseriftrue}
 \DeclareOption{utopia}{\dylanutopiatrue}
@@ -21,6 +22,7 @@
 \DeclareOption{hide}{\dylanhidetrue}
 \DeclareOption{water}{\dylanwatertrue}
 \DeclareOption{new}{\dylannewtrue}
+\DeclareOption{light}{\dylanlighttrue}
 \DeclareOption{tutoring}{\dylancopytrue \dylanwatertrue \dylannewtrue \dylanmathpazotrue}
 
 \ProcessOptions*
@@ -77,13 +79,17 @@
 
 \let\LaTeXtitle\title
 \renewcommand{\title}[1]{\LaTeXtitle{\color{DylanHeadY}{\sffamily\bfseries\LARGE #1}}}
-\renewcommand{\abstractname}{\large\sffamily\bfseries\color{DylanBlue}Abstract}
 \renewcommand{\figurename}{\sffamily\color{DylanBlue}Figure}
 \renewcommand{\tablename}{\sffamily\color{DylanBlue}Table}
 
 \let\LaTeX@startsection\@startsection 
 \renewcommand{\@startsection}[6]{\LaTeX@startsection%
 {#1}{#2}{#3}{#4}{#5}{\color{DylanRoyal}\raggedright #6}} 
+
+%%% BOOK %%%
+\makeatletter
+\@ifclassloaded{book}{}{\renewcommand{\abstractname}{\large\sffamily\bfseries\color{DylanBlue}Abstract}}
+\makeatother
 
 %% % Fix periods at end of section numbers
 %% \renewcommand \thesection {\@arabic\c@section.}
@@ -193,7 +199,7 @@
 \newcommand{\pfrac}[2]{\left( \frac{#1}{#2} \right)}  % frac with large paren
 \usepackage{tikz, tikz-cd, pgfplots} 
 \usepgfplotslibrary{fillbetween}
-\usetikzlibrary{arrows.meta,scopes,patterns,shapes.geometric,angles,quotes,intersections}
+\usetikzlibrary{arrows.meta,arrows,scopes,patterns,shapes.geometric,angles,quotes,intersections,calc}
 \makeatletter
 \tikzset{% https://tex.stackexchange.com/a/142491
   mirror/.code={\pgfutil@in@{--}{#1}\ifpgfutil@in@\tikz@trans@mirror#1\@nil
@@ -262,6 +268,8 @@ ylabel={$y$},          % default put y on y-axis
 \usepackage{bigstrut}
 
 \usepackage{thmtools}
+
+\usepackage[shortlabels]{enumitem}
 
 \RequirePackage{xcolor}
 
@@ -746,6 +754,433 @@ leftline=false]{solution}{Solution}
 % \def\walk{\noindent {\color{PineGreen}\sffamily\bfseries Walkthrough. }\hspace*{2mm}}
 
 \else
+
+\ifdylanlight
+
+\newtheoremstyle{dylantheo}%                % Name
+  {0pt}%                                     % Space above
+  {2pt}%                                     % Space below
+  {}%                                     % Body font
+  {}%                                     % Indent amount
+  {\color{darkblue}\sffamily\bfseries}%                            % Theorem head font
+  {}%                                    % Punctuation after theorem head
+  {\newline}%                                    % Space after theorem head, ' ', or \newline
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}%                                     % Theorem head spec (can be left empty, meaning `normal')
+  
+\newtheoremstyle{dylantheononum}%                % Name
+  {0pt}%                                     % Space above
+  {2pt}%                                     % Space below
+  {}%                                     % Body font
+  {}%                                     % Indent amount
+  {\color{darkblue}\sffamily\bfseries}%                            % Theorem head font
+  {}%                                    % Punctuation after theorem head
+  {\newline}%                                    % Space after theorem head, ' ', or \newline
+  {\thmname{#1}\thmnote{ (#3)}}%                                     % Theorem head spec (can be left empty, meaning `normal')
+  
+\newtheoremstyle{dylandef}%                % Name
+  {0pt}%                                     % Space above
+  {2pt}%                                     % Space below
+  {}%                                     % Body font
+  {}%                                     % Indent amount
+  {\color{sangria}\sffamily\bfseries}%                            % Theorem head font
+  {}%                                    % Punctuation after theorem head
+  {\newline}%                                    % Space after theorem head, ' ', or \newline
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}%                                     % Theorem head spec (can be left empty, meaning `normal')
+  
+\newtheoremstyle{dylanexam}%                % Name
+  {0pt}%                                     % Space above
+  {2pt}%                                     % Space below
+  {}%                                     % Body font
+  {}%                                     % Indent amount
+  {\color{ForestGreen}\sffamily\bfseries}%                            % Theorem head font
+  {}%                                    % Punctuation after theorem head
+  {\newline}%                                    % Space after theorem head, ' ', or \newline
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}%                                     % Theorem head spec (can be left empty, meaning `normal')
+  
+\newtheoremstyle{dylanmoral}%                % Name
+  {0pt}%                                     % Space above
+  {2pt}%                                     % Space below
+  {}%                                     % Body font
+  {}%                                     % Indent amount
+  {\color{aqua!95!black}\sffamily\bfseries}%                            % Theorem head font
+  {}%                                    % Punctuation after theorem head
+  {\newline}%                                    % Space after theorem head, ' ', or \newline
+  {\thmname{#1}\thmnote{ (#3)}}%                                     % Theorem head spec (can be left empty, meaning `normal')
+  
+\newtheoremstyle{dylanprob}%                % Name
+  {0pt}%                                     % Space above
+  {2pt}%                                     % Space below
+  {}%                                     % Body font
+  {}%                                     % Indent amount
+  {\color{RoyalPurple}\sffamily\bfseries}%                            % Theorem head font
+  {}%                                    % Punctuation after theorem head
+  {\newline}%                                    % Space after theorem head, ' ', or \newline
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}%                                     % Theorem head spec (can be left empty, meaning `normal')
+  
+\newtheoremstyle{dylanfact}%                % Name
+  {0pt}%                                     % Space above
+  {2pt}%                                     % Space below
+  {}%                                     % Body font
+  {}%                                     % Indent amount
+  {\color{BurntOrange}\sffamily\bfseries}%                            % Theorem head font
+  {}%                                    % Punctuation after theorem head
+  {\newline}%                                    % Space after theorem head, ' ', or \newline
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}%                                     % Theorem head spec (can be left empty, meaning `normal')
+  
+\ifdylanhide
+
+\newtheoremstyle{dylanexercise}%                % Name
+  {0pt}%                                     % Space above
+  {2pt}%                                     % Space below
+  {}%                                     % Body font
+  {}%                                     % Indent amount
+  {\color{NavyBlue}\sffamily\bfseries}%                            % Theorem head font
+  {}%                                    % Punctuation after theorem head
+  {\newline}%                                    % Space after theorem head, ' ', or \newline
+  {\thmname{#1}\thmnumber{ #2}}%
+  
+\newtheoremstyle{dylanProblem}%                % Name
+  {0pt}%                                     % Space above
+  {2pt}%                                     % Space below
+  {}%                                     % Body font
+  {}%                                     % Indent amount
+  {\color{RedViolet}\sffamily\bfseries}%                            % Theorem head font
+  {}%                                    % Punctuation after theorem head
+  {\newline}%                                    % Space after theorem head, ' ', or \newline
+  {\thmname{#1}\thmnumber{ #2}}%
+
+\else
+
+\newtheoremstyle{dylanexercise}%                % Name
+  {0pt}%                                     % Space above
+  {2pt}%                                     % Space below
+  {}%                                     % Body font
+  {}%                                     % Indent amount
+  {\color{NavyBlue}\sffamily\bfseries}%                            % Theorem head font
+  {}%                                    % Punctuation after theorem head
+  {\newline}%                                    % Space after theorem head, ' ', or \newline
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}%
+  
+\newtheoremstyle{dylanProblem}%                % Name
+  {0pt}%                                     % Space above
+  {2pt}%                                     % Space below
+  {}%                                     % Body font
+  {}%                                     % Indent amount
+  {\color{RedViolet}\sffamily\bfseries}%                            % Theorem head font
+  {}%                                    % Punctuation after theorem head
+  {\newline}%                                    % Space after theorem head, ' ', or \newline
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}%
+
+\fi
+  
+\newtheoremstyle{dylanwalk}%                % Name
+  {}%                                     % Space above
+  {}%                                     % Space below
+  {}%                                     % Body font
+  {}%                                     % Indent amount
+  {\color{PineGreen}\sffamily\bfseries}%                            % Theorem head font
+  {.}%                                    % Punctuation after theorem head
+  {1.5mm}%                                    % Space after theorem head, ' ', or \newline
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ #3}}%
+  
+\newtheoremstyle{dylaninduct}%                % Name
+  {0pt}%                                     % Space above
+  {2pt}%                                     % Space below
+  {}%                                     % Body font
+  {}%                                     % Indent amount
+  {\color{Cyan!50!CornflowerBlue}\sffamily\bfseries}%                            % Theorem head font
+  {}%                                    % Punctuation after theorem head
+  {\newline}%                                    % Space after theorem head, ' ', or \newline
+  {\thmname{#1}\thmnote{ (#3)}}%                                     % Theorem head spec (can be left empty, meaning `normal')
+  
+\newtheoremstyle{dylancase}%                % Name
+  {0pt}%                                     % Space above
+  {2pt}%                                     % Space below
+  {}%                                     % Body font
+  {}%                                     % Indent amount
+  {\color{Magenta!50!CornflowerBlue}\sffamily\bfseries}%                            % Theorem head font
+  {}%                                    % Punctuation after theorem head
+  {\newline}%                                    % Space after theorem head, ' ', or \newline
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}%                                     % Theorem head spec (can be left empty, meaning `normal')
+  
+\newtheoremstyle{dylanremark}%                % Name
+  {0pt}%                                     % Space above
+  {2pt}%                                     % Space below
+  {}%                                     % Body font
+  {}%                                     % Indent amount
+  {\color{black}\sffamily\itshape}%                            % Theorem head font
+  {}%                                    % Punctuation after theorem head
+  {\newline}%                                    % Space after theorem head, ' ', or \newline
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}%                                     % Theorem head spec (can be left empty, meaning `normal')
+  
+\newtheoremstyle{dylanmini}%                % Name
+  {0pt}%                                     % Space above
+  {2pt}%                                     % Space below
+  {}%                                     % Body font
+  {}%                                     % Indent amount
+  {\color{black}\sffamily\bfseries}%                            % Theorem head font
+  {}%                                    % Punctuation after theorem head
+  {\newline}%                                    % Space after theorem head, ' ', or \newline
+  {\thmname{#1}\thmnote{ (#3)}}%                                     % Theorem head spec (can be left empty, meaning `normal')
+
+\RequirePackage{mdframed}
+
+\RequirePackage{tcolorbox}
+\tcbuselibrary{skins}
+\tcbuselibrary{breakable}
+\tcbuselibrary{theorems}
+
+\theoremstyle{dylantheo}
+\newmdtheoremenv[% settings
+linecolor=darkblue,
+linewidth=0.5mm,
+nobreak=false,
+innerleftmargin=5pt,
+innerrightmargin=5pt,
+topline=false,
+bottomline=false,
+rightline=false,
+leftline=true]{theorem}{Theorem}
+
+\theoremstyle{dylantheo}
+\newmdtheoremenv[% settings
+linecolor=darkblue,
+linewidth=0.5mm,
+nobreak=false,
+innerleftmargin=5pt,
+innerrightmargin=5pt,
+topline=false,
+bottomline=false,
+rightline=false,
+leftline=true]{lemma}[theorem]{Lemma}
+
+\theoremstyle{dylantheononum}
+\newmdtheoremenv[% settings
+linecolor=darkblue,
+linewidth=0.5mm,
+nobreak=false,
+innerleftmargin=5pt,
+innerrightmargin=5pt,
+topline=false,
+bottomline=false,
+rightline=false,
+leftline=true]{lemma*}{Lemma}
+
+\theoremstyle{dylantheo}
+\newmdtheoremenv[% settings
+linecolor=darkblue,
+linewidth=0.5mm,
+nobreak=false,
+innerleftmargin=5pt,
+innerrightmargin=5pt,
+topline=false,
+bottomline=false,
+rightline=false,
+leftline=true]{corollary}[theorem]{Corollary}
+
+\theoremstyle{dylantheo}
+\newmdtheoremenv[% settings
+linecolor=darkblue,
+nobreak=false,
+linewidth=0.5mm,
+innerleftmargin=5pt,
+innerrightmargin=5pt,
+topline=false,
+bottomline=false,
+rightline=false,
+leftline=true]{postulate}[theorem]{Postulate}
+
+\theoremstyle{dylantheo}
+\newmdtheoremenv[% settings
+linecolor=darkblue,
+nobreak=false,
+linewidth=0.5mm,
+innerleftmargin=5pt,
+innerrightmargin=5pt,
+topline=false,
+bottomline=false,
+rightline=false,
+leftline=true]{prop}[theorem]{Proposition}
+
+\theoremstyle{dylantheo}
+\newmdtheoremenv[% settings
+linecolor=darkblue,
+nobreak=false,
+linewidth=0.5mm,
+innerleftmargin=5pt,
+innerrightmargin=5pt,
+topline=false,
+bottomline=false,
+rightline=false,
+leftline=true]{law}[theorem]{Law}
+
+\theoremstyle{dylandef}
+\newmdtheoremenv[% settings
+linecolor=sangria,
+linewidth=0.5mm,
+nobreak=false,
+innerleftmargin=5pt,
+innerrightmargin=5pt,
+topline=false,
+bottomline=false,
+rightline=false,
+leftline=true]{defn}{Definition}
+
+\theoremstyle{dylanexam}
+\newmdtheoremenv[% settings
+linecolor=ForestGreen,
+linewidth=0.5mm,
+nobreak=false,
+innerleftmargin=5pt,
+innerrightmargin=5pt,
+topline=false,
+bottomline=false,
+rightline=false,
+leftline=true]{example}{Example}
+
+\theoremstyle{dylanmoral} 
+\newmdtheoremenv[% settings
+linecolor=aqua!95!black,
+linewidth=0.5mm,
+nobreak=false,
+innerleftmargin=5pt,
+innerrightmargin=5pt,
+topline=false,
+bottomline=false,
+rightline=false,
+leftline=true]{moral}{Moral}
+
+\theoremstyle{dylanprob} 
+\newmdtheoremenv[% settings
+linecolor=RoyalPurple,
+linewidth=0.5mm,
+nobreak=false,
+innerleftmargin=5pt,
+innerrightmargin=5pt,
+topline=false,
+bottomline=false,
+rightline=false,
+leftline=true]{problem}{Problem}
+
+\theoremstyle{dylanfact}
+\newmdtheoremenv[% settings
+linecolor=BurntOrange,
+linewidth=0.5mm,
+nobreak=false,
+innerleftmargin=5pt,
+innerrightmargin=5pt,
+topline=false,
+bottomline=false,
+rightline=false,
+leftline=true]{fact}{Fact}
+
+\theoremstyle{dylanexercise}
+\newmdtheoremenv[% settings
+nobreak=false,
+innerleftmargin=0pt,
+innerrightmargin=0pt,
+topline=false,
+bottomline=false,
+rightline=false,
+leftline=false]{exercise}{Exercise}
+
+\theoremstyle{dylanProblem}
+\newmdtheoremenv[% settings
+nobreak=false,
+innerleftmargin=0pt,
+innerrightmargin=0pt,
+topline=false,
+bottomline=false,
+rightline=false,
+leftline=false]{Problem}{Problem}
+
+\theoremstyle{dylaninduct}
+\newmdtheoremenv[% settings
+linecolor=Cyan!50!CornflowerBlue,
+linewidth=0.5mm,
+nobreak=false,
+innerleftmargin=5pt,
+innerrightmargin=5pt,
+topline=false,
+bottomline=false,
+rightline=false,
+leftline=true]{basecase}{Base Case}
+
+\theoremstyle{dylaninduct}
+\newmdtheoremenv[% settings
+linecolor=Cyan!50!CornflowerBlue,
+linewidth=0.5mm,
+nobreak=false,
+innerleftmargin=5pt,
+innerrightmargin=5pt,
+topline=false,
+bottomline=false,
+rightline=false,
+leftline=true]{indstep}{Inductive Step}
+
+\theoremstyle{dylancase}
+\newmdtheoremenv[% settings
+linecolor=Magenta!50!CornflowerBlue,
+linewidth=0.5mm,
+nobreak=false,
+innerleftmargin=5pt,
+innerrightmargin=5pt,
+topline=false,
+bottomline=false,
+rightline=false,
+leftline=true]{case}{Case}
+
+\theoremstyle{dylanremark}
+\newmdtheoremenv[% settings
+linecolor=Black,
+linewidth=0.5mm,
+nobreak=false,
+innerleftmargin=5pt,
+innerrightmargin=5pt,
+topline=false,
+bottomline=false,
+rightline=false,
+leftline=true]{remark}{Remark}
+
+\theoremstyle{dylanremark}
+\newmdtheoremenv[% settings
+linecolor=Black,
+linewidth=0.5mm,
+nobreak=false,
+innerleftmargin=5pt,
+innerrightmargin=5pt,
+topline=false,
+bottomline=false,
+rightline=false,
+leftline=true]{solution}{Solution}
+
+\declaretheorem[style = plain, name = Question]{question}
+\declaretheorem[style = plain, name = Question, numbered = no]{question*}
+
+\declaretheorem[style = plain, name = Claim]{claim}
+\declaretheorem[style = plain, name = Claim, numbered = no]{claim*}
+
+\newenvironment{exercisebox}{\begin{mdframed}[linecolor=NavyBlue,linewidth=0.7mm,topline=false,bottomline=false,leftline=true,rightline=false,
+    innertopmargin=3pt,
+    innerbottommargin=2pt,
+    innerrightmargin=5pt,
+    innerleftmargin=5pt]}{\end{mdframed}}
+    
+\newenvironment{problembox}{\begin{mdframed}[linecolor=RedViolet,linewidth=0.7mm,topline=false,bottomline=false,leftline=true,rightline=false,
+    innertopmargin=3pt,
+    innerbottommargin=2pt,
+    innerrightmargin=5pt,
+    innerleftmargin=5pt]}{\end{mdframed}}
+    
+\theoremstyle{dylanwalk}
+
+%%added walk for walkthroughs 
+\newtheorem*{walk}{Walkthrough} % always use the enumerate environment during walkthroughs
+
+% \def\walk{\noindent {\color{PineGreen}\sffamily\bfseries Walkthrough. }\hspace*{2mm}}
+
+\else
+
 \newtheoremstyle{dylantheo}%                % Name
   {0pt}%                                     % Space above
   {2pt}%                                     % Space below
@@ -1184,6 +1619,8 @@ leftline=true]{solution}{Solution}
 \newtheorem*{walk}{Walkthrough} % always use the enumerate environment during walkthroughs
 
 % \def\walk{\noindent {\color{PineGreen}\sffamily\bfseries Walkthrough. }\hspace*{2mm}}
+\fi 
+
 \fi
 
 \usepackage{comment}
@@ -1331,11 +1768,13 @@ mdframed={
 
 \usepackage{asymptote}
 \newcommand{\bluebf}[1]{\textbf{\sffamily\color{blue!90}\boldmath #1}}
+\newcommand{\redbf}[1]{\textbf{\sffamily\color{red!90!black}\boldmath #1}}
+\newcommand{\greenbf}[1]{\textbf{\sffamily\color{ForestGreen!90!black}\boldmath #1}}
 \newcommand{\vocab}[1]{\bluebf{#1}\index{\MakeLowercase{#1}}}
-\usepackage[shortlabels]{enumitem}
-\newcommand{\redbf}[1]{\textsf{\textbf{\textcolor{red!70!black}{#1}}}}
+\newcommand{\defbf}[1]{\bluebf{#1}\index{#1}}
 \newcommand{\yearbf}[1]{\redbf{#1}}
-\usepackage[shortlabels]{enumitem}
+\newcommand{\personbf}[1]{\greenbf{#1}\index{#1}}
+\newcommand{\placebf}[1]{\greenbf{#1}\index{#1}}
 
 \newcommand{\myemail}[1]{\faEnvelope \text{ }\href{mailto:#1}{#1}}
 \newcommand{\mywebsite}[1]{\faGlobe \text{ }\href{#1}{#1}}
@@ -1401,6 +1840,12 @@ mdframed={
 \newenvironment{boxpar}[1][]{%
 \begin{mdframed}\vspace*{-0.5cm}\paragraph{\sffamily #1}
 }{\end{mdframed}}
+\newenvironment{prompt}{%
+\begin{mdframed}\vspace*{-0.5cm}\paragraph{\sffamily Prompt}
+}{\end{mdframed}}
+\newenvironment{hw}[1][]{%
+\begin{mdframed}\vspace*{-0.5cm}\paragraph{\sffamily HW #1}
+}{\end{mdframed}}
 
 \usepackage{float}
 
@@ -1426,16 +1871,17 @@ mdframed={
     \vskip 3ex
     \@afterheading}
 
-\renewcommand{\partname}{\sffamily \textcolor{blue}{Subject}}
+% \renewcommand{\partname}{\sffamily \textcolor{blue}{Subject}}
+\definecolor{schrift}{RGB}{0,73,114}
+\partfont{\sffamily\color{schrift}}
 
 % Let's customize \part
 \RequirePackage{etoolbox}
-\renewcommand{\thepart}{\textcolor{blue}{\arabic{part}}}
+\renewcommand{\thepart}{\arabic{part}}
 \makeatletter
 \patchcmd{\@part}{\par\nobreak}{: }{}{}
 \patchcmd{\@part}{\huge}{\Large}{}{}
 \makeatletter
-\@addtoreset{section}{part}
 
 \usepackage[makeroom]{cancel}
 
@@ -1608,3 +2054,123 @@ mdframed={
 \newenvironment{testbox}{%
 \begin{mdframed}[linewidth=0.1mm,topline=true,bottomline=true,leftline=true,rightline=true,innertopmargin=5pt,innerbottommargin=5pt,innerrightmargin=5pt,innerleftmargin=5pt]\vspace*{-0.5cm}\begin{multicols}{2}\saveenum\begin{enumerate}[wide,labelwidth=!,labelindent=0pt,label={\textbf{\boxed{\protect\threedigits{\theenumi}}}}]\resetenum
 }{\end{enumerate}\end{multicols}\end{mdframed}}
+
+%%% CHEM STUFF %%%
+\newcommand{\ex}[1]{\textbf{Ex:} #1}
+\usepackage{chemformula}
+
+%%% CALC STUFF %%%
+\newcommand{\limx}[1]{\lim_{x\to #1}}
+
+\newcommand{\vocabsec}{\section*{\textcolor{red!50}{Vocabulary}}}
+
+\usepackage{makeidx}
+\makeatletter
+\renewenvironment{theindex}
+  {{\vocabsec}\par%
+  \@mkboth{\MakeUppercase\indexname}{\MakeUppercase\indexname}%
+  \parindent\z@
+  \parskip\z@ \@plus .3\p@\relax
+  \let\item\@idxitem
+  \begin{multicols}{3}\footnotesize}
+  {\end{multicols}}
+\makeatother
+\makeindex
+
+\newenvironment{voc}{ \begin{mdframed}\vocabsec\vspace*{-0.5cm}\begin{multicols*}{2}}{\end{multicols*}\end{mdframed}}
+
+\tikzstyle{line} = [draw, color=black, -latex']
+
+\usepackage{chronology}
+\usetikzlibrary{decorations.markings}
+
+%%% VOCAB
+\usepackage{makeidx}
+\makeatletter
+\renewenvironment{theindex}
+  {{\section*{\textcolor{DylanHeadX}{Vocabulary}}}\par%
+  \@mkboth{\MakeUppercase\indexname}{\MakeUppercase\indexname}%
+  \parindent\z@
+  \parskip\z@ \@plus .3\p@\relax
+  \let\item\@idxitem
+  \begin{multicols}{3}}
+  {\end{multicols}}
+\makeatother
+\makeindex
+
+\usepackage{chronology}
+\usetikzlibrary{decorations.markings}
+
+\makeatletter
+\let\matamp=&
+\catcode`\&=13
+\makeatletter
+\def&{\iftikz@is@matrix
+  \pgfmatrixnextcell
+  \else
+  \matamp
+  \fi}
+\makeatother
+
+\newcounter{lines}
+\def\endlr{\stepcounter{lines}\\}
+
+\newcounter{vtml}
+\setcounter{vtml}{0}
+
+\newif\ifvtimelinetitle
+\newif\ifvtimebottomline
+\tikzset{description/.style={
+  column 2/.append style={#1}
+ },
+ timeline color/.store in=\vtmlcolor,
+ timeline color=red!80!black,
+ timeline color st/.style={fill=\vtmlcolor,draw=\vtmlcolor},
+ use timeline header/.is if=vtimelinetitle,
+ use timeline header=false,
+ add bottom line/.is if=vtimebottomline,
+ add bottom line=false,
+ timeline title/.store in=\vtimelinetitle,
+ timeline title={},
+ line offset/.store in=\lineoffset,
+ line offset=4pt,
+}
+
+\NewEnviron{vtimeline}[1][]{%
+\setcounter{lines}{1}%
+\stepcounter{vtml}%
+\begin{tikzpicture}[column 1/.style={anchor=east},
+ column 2/.style={anchor=west},
+ text depth=0pt,text height=1ex,
+ row sep=1ex,
+ column sep=1em,
+ #1
+]
+\matrix(vtimeline\thevtml)[matrix of nodes]{\BODY};
+\pgfmathtruncatemacro\endmtx{\thelines-1}
+\path[timeline color st] 
+($(vtimeline\thevtml-1-1.north east)!0.5!(vtimeline\thevtml-1-2.north west)$)--
+($(vtimeline\thevtml-\endmtx-1.south east)!0.5!(vtimeline\thevtml-\endmtx-2.south west)$);
+\foreach \x in {1,...,\endmtx}{
+ \node[circle,timeline color st, inner sep=0.15pt, draw=white, thick] 
+ (vtimeline\thevtml-c-\x) at 
+ ($(vtimeline\thevtml-\x-1.east)!0.5!(vtimeline\thevtml-\x-2.west)$){};
+ \draw[timeline color st](vtimeline\thevtml-c-\x.west)--++(-3pt,0);
+ }
+ \ifvtimelinetitle%
+  \draw[timeline color st]([yshift=\lineoffset]vtimeline\thevtml.north west)--
+  ([yshift=\lineoffset]vtimeline\thevtml.north east);
+  \node[anchor=west,yshift=16pt,font=\large]
+   at (vtimeline\thevtml-1-1.north west) 
+   {\textsc{Timeline \thevtml}: \textit{\vtimelinetitle}};
+ \else%
+  \relax%
+ \fi%
+ \ifvtimebottomline%
+   \draw[timeline color st]([yshift=-\lineoffset]vtimeline\thevtml.south west)--
+  ([yshift=-\lineoffset]vtimeline\thevtml.south east);
+ \else%
+   \relax%
+ \fi%
+\end{tikzpicture}
+}
