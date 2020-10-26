@@ -2313,3 +2313,23 @@ Due: \computedate{#1}
 \newenvironment{infobox}{%
 \begin{enumerate}[wide,labelwidth=!,labelindent=0pt]
 }{\end{enumerate}}
+
+\begin{asydef}
+defaultpen(fontsize(11pt)+0.7);
+size(8cm);
+usepackage("amsmath");
+usepackage("amssymb");
+texpreamble("\RequirePackage{color}");
+import olympiad;
+import cse5;
+pointpen = black;
+pathpen = black;
+pathfontpen = black;
+anglepen = black;
+anglefontpen = black;
+pointfontsize = 8;
+pen bluey = rgb(0.1,0.417,0.571)+1;
+pen ruddy = rgb(0.568,0.208,0.098)+1;
+pen greeny = rgb(0.302,0.568,0.098)+1;
+pen dashed = linetype(new real[] {4,4});
+\end{asydef}
