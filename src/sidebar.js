@@ -6,7 +6,7 @@ function addSidebar() {
     sidebar.id = "sidebar";
     var closebtn = document.createElement("span");
     closebtn.innerHTML = "<a href='javascript:void(0)' onclick='closeNav()' class='closebtn'>&times;</a>";
-    var opts = [{page: "Home", link: "index.html"}, {page: "Projects", link: "projects.html"}, /*{page: "Contest History", link: "contesthistory.html"},*/ {page: "Tutorials", link: "tutorials.html"},];
+    var opts = [{page: "Home", link: "index.html"}, {page: "School Materials", link: "school.html"}, {page: "ASE", link: "ase.html"}, {page: "Online Classes", link: "onlineclasses.html"}, {page: "Blog", link: "https://yu-dylan-2.github.io/"}, {page: "Euclid's Orchard", link: "https://yu-dylan.github.io/euclid-orchard/"}];
     var name = location.pathname.substring(location.pathname.lastIndexOf("/") + 1);
     if(name == "") name = "index.html";
     opts.forEach(ele => {
