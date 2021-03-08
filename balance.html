@@ -178,7 +178,7 @@ function initDisable()
 <body>
 <script type="text/javascript">
 n = 13; //difficulty
-help = "(This game was made by Ankan Bhattacharya, I am just hosting it here for fun.) Objective: Find the value of the weight marked X. Its weight can be anywhere from 1 to " + t(n) + ". Do this by moving the " + n + " numbered weights you have available. The balance may tip accordingly. When you think you have deduced how much the object X weighs, enter your guess at the bottom and see if you are right! For assistance the total weight on each side will also be displayed."
+help = "Objective: Find the value of the weight marked X. Its weight can be anywhere from 1 to " + t(n) + ". Do this by moving the " + n + " numbered weights you have available. The balance may tip accordingly. When you think you have deduced how much the object X weighs, enter your guess at the bottom and see if you are right! For assistance the total weight on each side will also be displayed."
 v = new Array(n);
 w = new Array(n);
 game = document.getElementById("game");
@@ -192,6 +192,7 @@ lVal = x;
 rVal = 0;
 document.write("<table align=center border=2 id=game>");
 document.write("<tr align=center><th colspan=6 align=center width=512>");
+document.write("(This game was made by Ankan Bhattacharya, I am just hosting it here for fun.)");
 document.write(help);
 document.write("</th></tr>");
 
