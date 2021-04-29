@@ -1,2 +1,2 @@
 # justinh9.github.io
-My own website! 
+A personal website! 
